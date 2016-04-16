@@ -1,0 +1,1 @@
+web: java -jar build/libs/jca_springboot_jetty-1.0.jar
