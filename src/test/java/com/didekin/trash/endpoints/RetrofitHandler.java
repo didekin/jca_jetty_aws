@@ -23,7 +23,7 @@ import static com.didekin.trash.configuration.RetrofitConfigurationDev.jetty_loc
 import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient;
 import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient_pswd;
 import static com.didekin.trash.configuration.RetrofitConfigurationPre.jetty_pre_URL;
-import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient_Uri;
+import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient;
 import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient_pswd;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -37,7 +37,7 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
 public enum RetrofitHandler {
 
     JETTY_LOCAL(jetty_local_URL, new JksInAppClient(local_jks_appclient, local_jks_appclient_pswd)),
-    JETTY_PRE(jetty_pre_URL, new JksInAppClient(pre_jks_appclient_Uri, pre_jks_appclient_pswd)),
+    JETTY_PRE(jetty_pre_URL, new JksInAppClient(pre_jks_appclient, pre_jks_appclient_pswd)),
     ;
 
     private final Retrofit retrofit;

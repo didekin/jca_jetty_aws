@@ -18,16 +18,17 @@ import static com.didekin.trash.configuration.Profiles.AWS_PRE;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {RetrofitConfigurationPre.class})
 @ActiveProfiles(AWS_PRE)
-public class GreetingControllerPreTest extends GreetingControllerTest{
+public class GreetingControllerPreTest extends GreetingControllerTest {
 
     @Test
-    public void testGreeting() throws Exception{
+    public void testGreeting() throws Exception
+    {
         super.testGreeting();
     }
 
     @Test
     public void testGreetingClose() throws Exception
     {
-//        super.testGreetingClose();
+        super.testGreetingClose();
     }
 }

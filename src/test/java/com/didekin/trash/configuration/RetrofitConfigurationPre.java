@@ -18,13 +18,12 @@ import static com.didekin.trash.configuration.Profiles.AWS_PRE;
 public class RetrofitConfigurationPre {
 
     public static final String jetty_pre_URL = "https://jca-jetty-jar-env.eu-central-1.elasticbeanstalk.com";
-    public static final String pre_jks_appclient_Uri = "/Users/pedro/keystores/jca_jetty";
-    public static final String pre_jks_appclient_pswd = "jca_jetty";
+    public static final String pre_jks_appclient = "/Users/pedro/keystores/jca_jetty_jar";
+    public static final String pre_jks_appclient_pswd = "jca_jetty_jar";
 
     @Bean
     public RetrofitHandler retrofitHandler() throws NoSuchFieldException, IllegalAccessException
     {
-//        RetrofitConfigurationDev.setEnvironment();
         return RetrofitHandler.JETTY_PRE;
     }
 

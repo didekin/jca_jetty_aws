@@ -19,7 +19,7 @@ import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
 @Configuration
 public class RetrofitConfigurationDev {
 
-    public static final int NGINX_port = 8443;
+    public static final int NGINX_port = 443;
     public static final String jetty_local_URL = "https://" + JETTY_host_name + ":" + NGINX_port;
     public static final String local_jks_appclient = "/Users/pedro/keystores/jca_jetty";
     public static final String local_jks_appclient_pswd = "jca_jetty";

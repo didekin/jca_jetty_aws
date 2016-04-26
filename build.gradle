@@ -21,7 +21,6 @@ configurations {
 
 dependencies {
     compile 'com.google.code.gson:gson:2.6.1'
-    compile 'com.google.guava:guava:19.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
@@ -36,7 +35,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-jetty'
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile 'org.springframework:spring-context-support'
-    compile 'org.springframework.boot:spring-boot-starter-security'
+//    compile 'org.springframework.boot:spring-boot-starter-security'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
