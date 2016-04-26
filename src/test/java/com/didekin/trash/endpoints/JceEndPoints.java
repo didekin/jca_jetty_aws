@@ -13,17 +13,9 @@ import retrofit2.http.Query;
  */
 public interface JceEndPoints {
 
-    String HOST_PORT = "http://localhost:8080";
+    @GET(GreetingController.GREETING_URL)
+    Call<Greeting> greeting(@Query(GreetingController.NAME_PARAM) String name);
 
-    String GREETING_URL = "/greeting";
-    String GREETING_URL_CLOSE = "/close/greeting";
-    String NAME_PARAM = "name";
-    String ERROR = "/error";
-    String MIME_JSON = "application/json";
-
-    @GET(GREETING_URL)
-    Call<Greeting> greeting(@Query(NAME_PARAM) String name);
-
-    @GET(GREETING_URL_CLOSE)
-    Call<Greeting> greetingClose(@Query(NAME_PARAM) String name);
+    @GET(GreetingController.GREETING_URL_CLOSE)
+    Call<Greeting> greetingClose(@Query(GreetingController.NAME_PARAM) String name);
 }

@@ -1,18 +1,10 @@
 package com.didekin.trash.endpoints;
 
-import com.didekin.trash.Application;
-import com.didekin.trash.configuration.RetrofitConfiguration;
 import com.didekin.trash.dominio.ErrorBean;
 import com.didekin.trash.dominio.Greeting;
 
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.annotation.Annotation;
 
@@ -21,7 +13,6 @@ import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -31,11 +22,11 @@ import static org.junit.Assert.assertThat;
  * Date: 07/04/16
  * Time: 17:37
  */
-@SpringApplicationConfiguration(classes = {Application.class, RetrofitConfiguration.class})
-public abstract class GreetingControllerTest {
+abstract class GreetingControllerTest {
 
     @Autowired
     private RetrofitHandler retrofitHandler;
+
     private JceEndPoints endPoint;
     private Retrofit retrofit;
 
@@ -45,7 +36,6 @@ public abstract class GreetingControllerTest {
         retrofit = retrofitHandler.getRetrofit();
     }
 
-    @Test
     public void testGreeting() throws Exception
     {
         Response<Greeting> response = endPoint.greeting("Pedro").execute();
@@ -56,7 +46,6 @@ public abstract class GreetingControllerTest {
         assertThat(converter, notNullValue());
     }
 
-    @Test
     public void testGreetingClose() throws Exception
     {
         Response<Greeting> response = endPoint.greetingClose("Pedro").execute();

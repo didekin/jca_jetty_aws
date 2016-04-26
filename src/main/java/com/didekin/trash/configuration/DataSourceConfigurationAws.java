@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+import static com.didekin.trash.configuration.Profiles.AWS_PRE;
 import static com.didekin.trash.configuration.Profiles.DB_PRE;
 
 /**
@@ -18,30 +19,19 @@ import static com.didekin.trash.configuration.Profiles.DB_PRE;
  * Time: 15:59
  */
 @Configuration
-@PropertySource({"classpath:/application.properties"})
 public class DataSourceConfigurationAws {
 
     @Autowired
-    Environment env;
+    org.apache.tomcat.jdbc.pool.DataSource tomcatDs;
 
-    @Profile(DB_PRE)
+    @Profile(AWS_PRE)
     @Bean
     public DataSource dataSource()
     {
-        org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
-        ds.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-        ds.setUrl("jdbc:mysql://" + System.getenv("RDS_HOSTNAME") + ":" + System.getenv("RDS_PORT") + "/" + System.getenv("RDS_DB_NAME"));
-        ds.setUsername(System.getenv("RDS_USERNAME"));
-        ds.setPassword(System.getenv("RDS_PASSWORD"));
-
-//        ds.setUrl("jdbc:mysql://mysql-frank-1.c2ojt9azfyy4.eu-central-1.rds.amazonaws.com:3306/didekin_pre?user=frank_1_root&password=xAt-WDS-7sT-YSb");
-
-        ds.setInitialSize(env.getProperty("spring.datasource.initial_size", Integer.class));
-        ds.setMaxActive(env.getProperty("spring.datasource.maxactive", Integer.class));
-        ds.setMaxIdle(env.getProperty("spring.datasource.maxidle", Integer.class));
-        ds.setMinIdle(env.getProperty("spring.datasource.minidle", Integer.class));
-        ds.setValidationQuery(env.getProperty("spring.datasource.validation_query"));
-        return ds;
+        tomcatDs.setUrl("jdbc:mysql://" + System.getenv("RDS_HOSTNAME") + ":" + System.getenv("RDS_PORT") + "/" + System.getenv("RDS_DB_NAME"));
+        tomcatDs.setUsername(System.getenv("RDS_USERNAME"));
+        tomcatDs.setPassword(System.getenv("RDS_PASSWORD"));
+        return tomcatDs;
     }
 
     @Bean

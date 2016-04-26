@@ -17,6 +17,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.didekin.trash.endpoints.GreetingController.ERROR;
+import static com.didekin.trash.endpoints.GreetingController.MIME_JSON;
+
 
 /**
  * User: pedro@didekin
@@ -43,16 +46,17 @@ public class ApplicationErrorCtrl implements ErrorController {
     @Override
     public String getErrorPath()
     {
-        return JceEndPoints.ERROR;
+        return ERROR;
     }
 
-    @RequestMapping(value = JceEndPoints.ERROR, produces = JceEndPoints.MIME_JSON)
+    @RequestMapping(value = ERROR, produces = MIME_JSON)
     public ErrorBean handleErrors(HttpServletRequest request)
     {
         logger.info("handleErrors()");
 
         RequestAttributes requestAttributes = new ServletRequestAttributes(request);
         Map<String, Object> errorMap = errorAttributes.getErrorAttributes(requestAttributes, false);
+        logger.error(errorMap.get("error") + "Http status: " + errorMap.get("status"));
         return new ErrorBean((String) errorMap.get("error"), (Integer) errorMap.get("status"));
     }
 }

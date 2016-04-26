@@ -1,1 +1,1 @@
-web: java -jar build/libs/jca_springboot_jetty-1.0.jar
+web: java -jar build/libs/jca_jetty_jar-1.0.jar

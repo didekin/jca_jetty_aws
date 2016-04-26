@@ -6,19 +6,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import static com.didekin.trash.configuration.Profiles.JETTY_PRE;
+import static com.didekin.trash.configuration.Profiles.AWS_PRE;
 
 /**
  * User: pedro@didekin
  * Date: 20/04/16
  * Time: 16:33
  */
-@Profile(JETTY_PRE)
+@Profile(AWS_PRE)
 @Configuration
 public class RetrofitConfigurationPre {
 
+    public static final String jetty_pre_URL = "https://jca-jetty-jar-env.eu-central-1.elasticbeanstalk.com";
+    public static final String pre_jks_appclient_Uri = "/Users/pedro/keystores/jca_jetty";
+    public static final String pre_jks_appclient_pswd = "jca_jetty";
+
     @Bean
-    public RetrofitHandler retrofitHandler(){
+    public RetrofitHandler retrofitHandler() throws NoSuchFieldException, IllegalAccessException
+    {
+//        RetrofitConfigurationDev.setEnvironment();
         return RetrofitHandler.JETTY_PRE;
     }
 

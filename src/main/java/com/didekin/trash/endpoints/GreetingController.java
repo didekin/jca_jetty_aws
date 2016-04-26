@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import static com.didekin.trash.endpoints.JceEndPoints.GREETING_URL;
-import static com.didekin.trash.endpoints.JceEndPoints.GREETING_URL_CLOSE;
-import static com.didekin.trash.endpoints.JceEndPoints.MIME_JSON;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @SuppressWarnings("WeakerAccess")
 @RestController
 public class GreetingController {
+
+    public static final String GREETING_URL = "/greeting";
+    public static final String GREETING_URL_CLOSE = "/closed/greeting";
+    public static final String NAME_PARAM = "prop";
+    public static final String ERROR = "/error";
+    public static final String MIME_JSON = "application/json";
 
     private static final Logger logger = LoggerFactory.getLogger(GreetingController.class.getCanonicalName());
 
@@ -30,17 +33,17 @@ public class GreetingController {
     private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(value = GREETING_URL, method = GET ,produces = MIME_JSON)
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name)
+    public Greeting greeting(@RequestParam(value = "prop", defaultValue = "World") String name)
     {
-        return new Greeting(counter.incrementAndGet(),
-                String.format(template, name));
+        logger.debug("greeting(), name = " + name);
+        return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 
     @RequestMapping(value = GREETING_URL_CLOSE, method = GET ,produces = MIME_JSON)
-    public Greeting greetingClose(@RequestParam(value = "name", defaultValue = "World") String name)
+    public Greeting greetingClose(@RequestParam(value = "prop", defaultValue = "World") String name)
     {
-        return new Greeting(counter.incrementAndGet(),
-                String.format(templateClose, name));
+        logger.debug("greetingClose(), name = " + name);
+        return new Greeting(counter.incrementAndGet(), String.format(templateClose, name));
     }
 
 

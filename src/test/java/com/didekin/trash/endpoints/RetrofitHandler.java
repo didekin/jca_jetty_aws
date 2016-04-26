@@ -1,5 +1,7 @@
 package com.didekin.trash.endpoints;
 
+import com.didekin.trash.configuration.Profiles.JksInAppClient;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -17,7 +19,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.didekin.trash.endpoints.JceEndPoints.HOST_PORT;
+import static com.didekin.trash.configuration.RetrofitConfigurationDev.jetty_local_URL;
+import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient;
+import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient_pswd;
+import static com.didekin.trash.configuration.RetrofitConfigurationPre.jetty_pre_URL;
+import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient_Uri;
+import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient_pswd;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
@@ -27,17 +34,19 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
  * Date: 10/04/16
  * Time: 12:22
  */
-enum RetrofitHandler {
+public enum RetrofitHandler {
 
-    HANDLER,;
+    JETTY_LOCAL(jetty_local_URL, new JksInAppClient(local_jks_appclient, local_jks_appclient_pswd)),
+    JETTY_PRE(jetty_pre_URL, new JksInAppClient(pre_jks_appclient_Uri, pre_jks_appclient_pswd)),
+    ;
 
-    final Retrofit retrofit;
+    private final Retrofit retrofit;
 
-    RetrofitHandler()
+    RetrofitHandler(final String hostPort, final JksInAppClient JksInAppClient)
     {
         retrofit = new Retrofit.Builder()
-                .baseUrl(HOST_PORT)
-                .client(getOkHttpClient())
+                .baseUrl(hostPort)
+                .client(getOkHttpClient(JksInAppClient))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
@@ -54,13 +63,13 @@ enum RetrofitHandler {
 
     // ====================== HELPER METHODS ========================
 
-    OkHttpClient getOkHttpClient()
+    OkHttpClient getOkHttpClient(JksInAppClient JksInAppClient)
     {
         return new OkHttpClient.Builder()
                 .addNetworkInterceptor(doLoggingInterceptor())
                 .connectTimeout(30, SECONDS)
                 .readTimeout(15, MINUTES)
-                .sslSocketFactory(getSslContext().getSocketFactory())
+                .sslSocketFactory(getSslContext(JksInAppClient).getSocketFactory())
                 .build();
     }
 
@@ -71,7 +80,7 @@ enum RetrofitHandler {
         return loggingInterceptor;
     }
 
-    private SSLContext getSslContext()
+    private SSLContext getSslContext(JksInAppClient JksInAppClient)
     {
         KeyStore keyStore;
         FileInputStream in;
@@ -82,10 +91,10 @@ enum RetrofitHandler {
             // Configuración cliente.
             String keyStoreType = KeyStore.getDefaultType();
             keyStore = KeyStore.getInstance(keyStoreType);
-            in = new FileInputStream("/usr/local/keystores/jetty1.jks");
-            keyStore.load(in, "jca_springboot_jetty".toCharArray());
+            in = new FileInputStream(JksInAppClient.jksUri);
+            keyStore.load(in, JksInAppClient.jksPswd.toCharArray());
 
-            // Create a TrustManager that trusts the CAs in our KeyStore
+            // Create a TrustManager that trusts the CAs in our JksInAppClient
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
             tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
             tmf.init(keyStore);

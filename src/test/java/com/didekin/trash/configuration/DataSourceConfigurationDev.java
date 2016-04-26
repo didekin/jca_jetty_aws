@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
 
-import static com.didekin.trash.configuration.Profiles.DB_LOCAL;
 import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
 
 /**
@@ -18,26 +16,19 @@ import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
  * Time: 15:59
  */
 @Configuration
-@PropertySource({"classpath:/application.properties"})
+@ContextConfiguration(classes = {DataSourceCommonConfig.class})
 public class DataSourceConfigurationDev {
 
     @Autowired
-    Environment env;
+    org.apache.tomcat.jdbc.pool.DataSource tomcatDs;
 
-    @Profile({DB_LOCAL, JETTY_LOCAL})
+    @Profile({JETTY_LOCAL})
     @Bean
     public DataSource dataSource()
     {
-        org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
-        ds.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-        ds.setUrl(Profiles.Uris.db_local_URL);
-        ds.setUsername("pedro");
-        ds.setPassword("pedro");
-        ds.setInitialSize(env.getProperty("spring.datasource.initial_size", Integer.class));
-        ds.setMaxActive(env.getProperty("spring.datasource.maxactive", Integer.class));
-        ds.setMaxIdle(env.getProperty("spring.datasource.maxidle", Integer.class));
-        ds.setMinIdle(env.getProperty("spring.datasource.minidle", Integer.class));
-        ds.setValidationQuery(env.getProperty("spring.datasource.validation_query"));
-        return ds;
+        tomcatDs.setUrl("jdbc:mysql://localhost:3306/didekin");
+        tomcatDs.setUsername("pedro");
+        tomcatDs.setPassword("pedro");
+        return tomcatDs;
     }
 }
