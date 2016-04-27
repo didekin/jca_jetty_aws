@@ -3,12 +3,12 @@ package com.didekin.trash.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
 
-import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
+import static com.didekin.trash.configuration.Profiles.DB_LOCAL;
 
 /**
  * User: pedro@didekin
@@ -16,13 +16,13 @@ import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
  * Time: 15:59
  */
 @Configuration
-@ContextConfiguration(classes = {DataSourceCommonConfig.class})
+@Import(RepositoryCommonConfig.class)
 public class DataSourceConfigurationDev {
 
     @Autowired
     org.apache.tomcat.jdbc.pool.DataSource tomcatDs;
 
-    @Profile({JETTY_LOCAL})
+    @Profile({DB_LOCAL})
     @Bean
     public DataSource dataSource()
     {

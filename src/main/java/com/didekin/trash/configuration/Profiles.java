@@ -8,6 +8,7 @@ package com.didekin.trash.configuration;
 @SuppressWarnings("WeakerAccess")
 public abstract class Profiles {
 
+    public static final String DB_LOCAL = "db-local";
     public static final String JETTY_LOCAL = "jetty-local";
     public static final String DB_PRE = "db-pre";
     public static final String AWS_PRE = "aws-pre";

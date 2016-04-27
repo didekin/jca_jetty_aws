@@ -33,10 +33,4 @@ public class DataSourceConfigurationAws {
         tomcatDs.setPassword(System.getenv("RDS_PASSWORD"));
         return tomcatDs;
     }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource)
-    {
-        return new JdbcTemplate(dataSource);
-    }
 }

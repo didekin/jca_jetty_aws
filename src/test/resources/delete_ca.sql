@@ -1,0 +1,1 @@
+DELETE FROM didekin_pre.comunidad_autonoma;
