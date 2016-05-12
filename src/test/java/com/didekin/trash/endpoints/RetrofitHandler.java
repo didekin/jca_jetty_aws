@@ -19,12 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.didekin.trash.configuration.RetrofitConfigurationDev.jetty_local_URL;
-import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient;
-import static com.didekin.trash.configuration.RetrofitConfigurationDev.local_jks_appclient_pswd;
-import static com.didekin.trash.configuration.RetrofitConfigurationPre.jetty_pre_URL;
-import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient;
-import static com.didekin.trash.configuration.RetrofitConfigurationPre.pre_jks_appclient_pswd;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
@@ -34,11 +28,8 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
  * Date: 10/04/16
  * Time: 12:22
  */
-public enum RetrofitHandler {
-
-    JETTY_LOCAL(jetty_local_URL, new JksInAppClient(local_jks_appclient, local_jks_appclient_pswd)),
-    JETTY_PRE(jetty_pre_URL, new JksInAppClient(pre_jks_appclient, pre_jks_appclient_pswd)),
-    ;
+@SuppressWarnings("WeakerAccess")
+public class RetrofitHandler {
 
     private final Retrofit retrofit;
 

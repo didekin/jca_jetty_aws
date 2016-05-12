@@ -4,6 +4,7 @@ import com.didekin.trash.dominio.ErrorBean;
 import com.didekin.trash.dominio.Greeting;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
@@ -25,17 +26,18 @@ import static org.junit.Assert.assertThat;
 abstract class GreetingControllerTest {
 
     @Autowired
-    private RetrofitHandler retrofitHandler;
+    private RetrofitHandlerForTests retrofitHandler;
 
     private JceEndPoints endPoint;
     private Retrofit retrofit;
 
     @Before
     public void setUp(){
-        endPoint = retrofitHandler.getServiceDebug(JceEndPoints.class);
-        retrofit = retrofitHandler.getRetrofit();
+        endPoint = retrofitHandler.getHandler().getServiceDebug(JceEndPoints.class);
+        retrofit = retrofitHandler.getHandler().getRetrofit();
     }
 
+    @Test
     public void testGreeting() throws Exception
     {
         Response<Greeting> response = endPoint.greeting("Pedro").execute();
@@ -46,6 +48,7 @@ abstract class GreetingControllerTest {
         assertThat(converter, notNullValue());
     }
 
+    @Test
     public void testGreetingClose() throws Exception
     {
         Response<Greeting> response = endPoint.greetingClose("Pedro").execute();

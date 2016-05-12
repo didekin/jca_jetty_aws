@@ -1,12 +1,11 @@
 package com.didekin.trash.configuration;
 
-import com.didekin.trash.endpoints.RetrofitHandler;
+import com.didekin.trash.endpoints.RetrofitHandlerForTests;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import static com.didekin.trash.Application.JETTY_host_name;
 import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
 
 /**
@@ -20,14 +19,15 @@ import static com.didekin.trash.configuration.Profiles.JETTY_LOCAL;
 public class RetrofitConfigurationDev {
 
     public static final int NGINX_port = 443;
+    public static final String JETTY_host_name = "localhost";
     public static final String jetty_local_URL = "https://" + JETTY_host_name + ":" + NGINX_port;
     public static final String local_jks_appclient = "/Users/pedro/keystores/jca_jetty";
     public static final String local_jks_appclient_pswd = "jca_jetty";
 
     @Bean
-    public RetrofitHandler retrofitHandler() throws NoSuchFieldException, IllegalAccessException
+    public RetrofitHandlerForTests retrofitHandler() throws NoSuchFieldException, IllegalAccessException
     {
-        return RetrofitHandler.JETTY_LOCAL;
+        return RetrofitHandlerForTests.JETTY_LOCAL;
     }
 
 //  ================================== HELPER METHODS ===================================

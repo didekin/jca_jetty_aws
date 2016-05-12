@@ -1,6 +1,6 @@
 package com.didekin.trash.configuration;
 
-import com.didekin.trash.endpoints.RetrofitHandler;
+import com.didekin.trash.endpoints.RetrofitHandlerForTests;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +22,9 @@ public class RetrofitConfigurationPre {
     public static final String pre_jks_appclient_pswd = "jca_jetty_jar";
 
     @Bean
-    public RetrofitHandler retrofitHandler() throws NoSuchFieldException, IllegalAccessException
+    public RetrofitHandlerForTests retrofitHandler() throws NoSuchFieldException, IllegalAccessException
     {
-        return RetrofitHandler.JETTY_PRE;
+        return RetrofitHandlerForTests.JETTY_PRE;
     }
 
 }
